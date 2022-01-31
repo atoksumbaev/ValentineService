@@ -10,6 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 
+        System.out.println("Добавил код");
         Scanner scanner = new Scanner(System.in);
         WishService wishService = new WishServiceImpl();
         while (true){
