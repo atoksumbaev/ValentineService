@@ -22,8 +22,8 @@ public class WishServiceImpl implements WishService {
         if (checkSendSms(sender, receipt)){
             throw new RuntimeException("Вы уже отправляли смс данному абоненту");
         }
+        System.out.println(sender.getId());
         sender.incrementSubsWish();
-        System.out.println("Count " + sender.getCountWishes());
         // Создать Wish -> положить его в массив
 
         for (int i = 0; i < wishes.length; i++){

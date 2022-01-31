@@ -10,9 +10,6 @@ public class Main {
 
     public static void main(String[] args) {
 
-        System.out.println("Добавил код");
-        System.out.println("Добавил код 2");
-        System.out.println("Добавил код 23124");
         Scanner scanner = new Scanner(System.in);
         WishService wishService = new WishServiceImpl();
         while (true){
@@ -28,9 +25,9 @@ public class Main {
             switch (data){
                 case 1:
                     System.out.println(" Введите номер получателя ");
-                    String senderPhone = scanner.next();
-                    System.out.println(" Введите номер отправителя ");
                     String receiptPhone = scanner.next();
+                    System.out.println(" Введите номер отправителя ");
+                    String senderPhone = scanner.next();
                     System.out.println(" Введите текст который хотите отправить");
                     String text = scanner.next();
                     wishService.createWish(text, senderPhone, receiptPhone);

@@ -16,6 +16,7 @@ public class Subscriber{
         this.phone = phone;
         this.id = Math.random();
         this.isActive = false;
+        countWishes = 0;
     }
 
     public void setId(double id) {
@@ -29,9 +30,8 @@ public class Subscriber{
     public void incrementSubsWish() {
         if (countWishes >= 2){
             throw new MaxCountSubsWishes("Вы достигли максимального кол-во отправок");
-        }else {
-            this.countWishes = countWishes++;
         }
+        this.countWishes++;
     }
 
     public double getId() {
