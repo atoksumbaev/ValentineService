@@ -11,6 +11,7 @@ public class Main {
     public static void main(String[] args) {
 
         System.out.println("Добавил код");
+        System.out.println("Добавил код 2");
         Scanner scanner = new Scanner(System.in);
         WishService wishService = new WishServiceImpl();
         while (true){
