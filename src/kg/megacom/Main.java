@@ -32,6 +32,9 @@ public class Main {
                     String text = scanner.next();
                     wishService.createWish(text, senderPhone, receiptPhone);
                     break;
+                case 2:
+                    System.out.println("Введите номер телефона");
+                    String receiptPhone2 = scanner.next();
                 case 3:
                     System.out.println("До свидания!");
                     break;

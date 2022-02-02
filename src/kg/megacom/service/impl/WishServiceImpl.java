@@ -1,6 +1,5 @@
 package kg.megacom.service.impl;
 
-import kg.megacom.exceptions.MaxCountSubsWishes;
 import kg.megacom.models.Subscriber;
 import kg.megacom.models.Wish;
 import kg.megacom.service.SubscriberService;
@@ -15,19 +14,19 @@ public class WishServiceImpl implements WishService {
     @Override
     public void createWish(String text, String phoneSender, String phoneReceipt) {
 
-        Subscriber sender =  service.findOrCreateSubscriber(phoneSender);
+        Subscriber sender = service.findOrCreateSubscriber(phoneSender);
         Subscriber receipt = service.findOrCreateSubscriber(phoneReceipt);
 
         // Проверить, отправлял ли сообщения sender k receipt
-        if (checkSendSms(sender, receipt)){
+        if (checkSendSms(sender, receipt)) {
             throw new RuntimeException("Вы уже отправляли смс данному абоненту");
         }
         System.out.println(sender.getId());
         sender.incrementSubsWish();
         // Создать Wish -> положить его в массив
 
-        for (int i = 0; i < wishes.length; i++){
-            if (wishes[i] == null){
+        for (int i = 0; i < wishes.length; i++) {
+            if (wishes[i] == null) {
                 Wish wish = new Wish(text, sender, receipt);
                 wishes[i] = wish;
                 System.out.println("Смс успешно отправлен!");
@@ -37,15 +36,36 @@ public class WishServiceImpl implements WishService {
         // Сообщение успешно отправлено
     }
 
-    private boolean checkSendSms(Subscriber sender, Subscriber receipt){
+    @Override
+    public Wish[] receiptWishes(String phone) {
+
+        Subscriber subscriber = service.findOrCreateSubscriber(phone);
+
         for (int i = 0; i < wishes.length; i++){
-            if (wishes[i] == null){
+
+        }
+
+        /*
+               1. Subscriber = Находим абонента по номеру телефона
+                   1.2 перебрать массив wishes ->
+                        сравнить id абонентов
+                            Положить в новый массив
+                        Выкинуть ошибку, о том что у абонента не было смс
+        * */
+
+
+        return new Wish[0];
+    }
+
+    private boolean checkSendSms(Subscriber sender, Subscriber receipt) {
+        for (int i = 0; i < wishes.length; i++) {
+            if (wishes[i] == null) {
                 continue;
-            }else {
+            } else {
                 if (wishes[i].getSender().getId() == sender.getId()
-                        && wishes[i].getReceipt().getId() == receipt.getId()){
+                        && wishes[i].getReceipt().getId() == receipt.getId()) {
                     return true;
-                }else {
+                } else {
                     return false;
                 }
             }

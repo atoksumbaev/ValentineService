@@ -32,4 +32,5 @@ public class SubscriberServiceImpl implements SubscriberService {
         }
         throw new RuntimeException("Массив переполнен");
     }
+
 }
