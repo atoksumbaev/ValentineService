@@ -53,4 +53,14 @@ public class Subscriber{
     public void setActive(boolean active) {
         isActive = active;
     }
+
+    @Override
+    public String toString() {
+        return "Subscriber{" +
+                "id=" + id +
+                ", phone='" + phone + '\'' +
+                ", isActive=" + isActive +
+                ", countWishes=" + countWishes +
+                '}';
+    }
 }

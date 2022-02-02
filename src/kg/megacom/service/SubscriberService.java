@@ -5,4 +5,6 @@ import kg.megacom.models.Subscriber;
 public interface SubscriberService {
 
     Subscriber findOrCreateSubscriber(String phone);
+
+    void blockSubcriber(String phone);
 }

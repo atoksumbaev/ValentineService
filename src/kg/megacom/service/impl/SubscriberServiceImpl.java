@@ -33,4 +33,28 @@ public class SubscriberServiceImpl implements SubscriberService {
         throw new RuntimeException("Массив переполнен");
     }
 
+    private Subscriber findSubcriber(String phone){
+        /*
+        * Проверка на null -> если ячейка не пустая -> сравнить его номера
+            return subscribers[i];
+        * */
+        return null;
+    }
+
+    @Override
+    public void blockSubcriber(String phone) {
+
+
+        /*
+
+            Subcriber subs = findSubcriber(phone);
+                subs -> isActibe = true;
+                Записать его в массив
+
+            findSubcriber(phone); -> null -> Сделать ошибку
+
+        * */
+
+    }
+
 }

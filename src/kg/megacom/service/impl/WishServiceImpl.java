@@ -1,5 +1,6 @@
 package kg.megacom.service.impl;
 
+import kg.megacom.exceptions.WishNotFound;
 import kg.megacom.models.Subscriber;
 import kg.megacom.models.Wish;
 import kg.megacom.service.SubscriberService;
@@ -17,11 +18,16 @@ public class WishServiceImpl implements WishService {
         Subscriber sender = service.findOrCreateSubscriber(phoneSender);
         Subscriber receipt = service.findOrCreateSubscriber(phoneReceipt);
 
+
         // Проверить, отправлял ли сообщения sender k receipt
         if (checkSendSms(sender, receipt)) {
             throw new RuntimeException("Вы уже отправляли смс данному абоненту");
         }
-        System.out.println(sender.getId());
+
+        if (receipt.isActive()){
+            throw new RuntimeException("Полуталь заблокиррован!");
+        }
+
         sender.incrementSubsWish();
         // Создать Wish -> положить его в массив
 
@@ -29,7 +35,9 @@ public class WishServiceImpl implements WishService {
             if (wishes[i] == null) {
                 Wish wish = new Wish(text, sender, receipt);
                 wishes[i] = wish;
+                System.out.println("--------------------------------");
                 System.out.println("Смс успешно отправлен!");
+                System.out.println("--------------------------------");
                 break;
             }
         }
@@ -39,11 +47,33 @@ public class WishServiceImpl implements WishService {
     @Override
     public Wish[] receiptWishes(String phone) {
 
-        Subscriber subscriber = service.findOrCreateSubscriber(phone);
-
-        for (int i = 0; i < wishes.length; i++){
-
+        Wish[] receiptWishes;
+        Subscriber receiptFromDataBase = service.findOrCreateSubscriber(phone);
+        System.out.println("ID получателя из базы " + receiptFromDataBase.getId());
+        int countWish = 0;
+        for (int i = 0; i < wishes.length; i++) {
+            if (wishes[i] != null && receiptFromDataBase.getId() == wishes[i].getReceipt().getId()) {
+                countWish++;
+            }
         }
+
+        // from db - 0.6395187209445142
+        //           0.6395187209445142
+
+        if (countWish == 0) {
+            throw new WishNotFound("У вас пока нет смс");
+        } else {
+            receiptWishes = new Wish[countWish];
+            int index = 0;
+            for (Wish w : wishes) {
+                if (w != null && w.getReceipt().getId() == receiptFromDataBase.getId()) {
+                    receiptWishes[index] = w;
+                    index++;
+                }
+            }
+            return receiptWishes;
+        }
+
 
         /*
                1. Subscriber = Находим абонента по номеру телефона
@@ -53,8 +83,6 @@ public class WishServiceImpl implements WishService {
                         Выкинуть ошибку, о том что у абонента не было смс
         * */
 
-
-        return new Wish[0];
     }
 
     private boolean checkSendSms(Subscriber sender, Subscriber receipt) {
