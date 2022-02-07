@@ -1,5 +1,7 @@
 package kg.megacom.service.impl;
 
+import kg.megacom.exceptions.MaxSubsCount;
+import kg.megacom.exceptions.SubNotFount;
 import kg.megacom.models.Subscriber;
 import kg.megacom.service.SubscriberService;
 
@@ -10,13 +12,6 @@ public class SubscriberServiceImpl implements SubscriberService {
     @Override
     public Subscriber findOrCreateSubscriber(String phone) {
 
-         /*
-                Если ячейка пуста
-                    Создаю и записываю абона
-                Не пуста
-                    Сравнить то что была там, с тем что пришло на вход
-                        return;
-            * */
         for (int i = 0; i < subscribers.length; i++){
             if (subscribers[i] == null){
                 Subscriber subscriber = new Subscriber(phone);
@@ -30,31 +25,21 @@ public class SubscriberServiceImpl implements SubscriberService {
                 }
             }
         }
-        throw new RuntimeException("Массив переполнен");
-    }
-
-    private Subscriber findSubcriber(String phone){
-        /*
-        * Проверка на null -> если ячейка не пустая -> сравнить его номера
-            return subscribers[i];
-        * */
-        return null;
+        throw new MaxSubsCount("Массив переполнен");
     }
 
     @Override
-    public void blockSubcriber(String phone) {
-
-
-        /*
-
-            Subcriber subs = findSubcriber(phone);
-                subs -> isActibe = true;
-                Записать его в массив
-
-            findSubcriber(phone); -> null -> Сделать ошибку
-
-        * */
-
+    public void blockSubcriber(String phone){
+        System.out.println(subscribers[0]);
+        for (int i = 0; i < subscribers.length; i++){
+            if (subscribers[i] != null && subscribers[i].getPhone().equals(phone)){
+                System.out.println(subscribers[i].getPhone());
+                Subscriber subscriber = subscribers[i];
+                subscriber.setActive(true);
+                subscribers[i] = subscriber;
+            }
+        }
+        throw new SubNotFount("User не найден");
     }
 
 }

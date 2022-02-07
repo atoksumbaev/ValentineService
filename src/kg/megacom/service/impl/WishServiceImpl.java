@@ -1,5 +1,7 @@
 package kg.megacom.service.impl;
 
+import kg.megacom.exceptions.BlockedException;
+import kg.megacom.exceptions.MaxCountSubsWishes;
 import kg.megacom.exceptions.WishNotFound;
 import kg.megacom.models.Subscriber;
 import kg.megacom.models.Wish;
@@ -21,11 +23,11 @@ public class WishServiceImpl implements WishService {
 
         // Проверить, отправлял ли сообщения sender k receipt
         if (checkSendSms(sender, receipt)) {
-            throw new RuntimeException("Вы уже отправляли смс данному абоненту");
+            throw new MaxCountSubsWishes("Вы уже отправляли смс данному абоненту");
         }
 
         if (receipt.isActive()){
-            throw new RuntimeException("Полуталь заблокиррован!");
+            throw new BlockedException("Получатель заблокиррован!");
         }
 
         sender.incrementSubsWish();
