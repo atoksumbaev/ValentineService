@@ -11,14 +11,14 @@ import kg.megacom.service.WishService;
 public class WishServiceImpl implements WishService {
 
     private Wish[] wishes = new Wish[10];
-    private SubscriberService service = new SubscriberServiceImpl();
+    //private SubscriberService service = new SubscriberServiceImpl();
 
 
     @Override
     public void createWish(String text, String phoneSender, String phoneReceipt) {
 
-        Subscriber sender = service.findOrCreateSubscriber(phoneSender);
-        Subscriber receipt = service.findOrCreateSubscriber(phoneReceipt);
+        Subscriber sender = SubscriberService.INSTANCE.findOrCreateSubscriber(phoneSender);
+        Subscriber receipt = SubscriberService.INSTANCE.findOrCreateSubscriber(phoneReceipt);
 
 
         // Проверить, отправлял ли сообщения sender k receipt
@@ -50,7 +50,7 @@ public class WishServiceImpl implements WishService {
     public Wish[] receiptWishes(String phone) {
 
         Wish[] receiptWishes;
-        Subscriber receiptFromDataBase = service.findOrCreateSubscriber(phone);
+        Subscriber receiptFromDataBase = SubscriberService.INSTANCE.findOrCreateSubscriber(phone);
         System.out.println("ID получателя из базы " + receiptFromDataBase.getId());
         int countWish = 0;
         for (int i = 0; i < wishes.length; i++) {

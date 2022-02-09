@@ -15,7 +15,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         WishService wishService = new WishServiceImpl();
-        SubscriberService service = new SubscriberServiceImpl();
+        //SubscriberService service = new SubscriberServiceImpl();
 
         while (true){
             System.out.println("Выберите действие:");
@@ -94,7 +94,7 @@ public class Main {
                     try {
                         System.out.println("Введите ваш номер ");
                         String phone = scanner.next();
-                        service.blockSubcriber(phone);
+                        SubscriberService.INSTANCE.blockSubcriber(phone);
                         break;
                     }catch (SubNotFount e){
                         System.out.println("--------------------------------");

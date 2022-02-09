@@ -37,6 +37,7 @@ public class SubscriberServiceImpl implements SubscriberService {
                 Subscriber subscriber = subscribers[i];
                 subscriber.setActive(true);
                 subscribers[i] = subscriber;
+                return;
             }
         }
         throw new SubNotFount("User не найден");
