@@ -15,7 +15,7 @@ public class Main {
 
         Scanner scanner = new Scanner(System.in);
         WishService wishService = new WishServiceImpl();
-        //SubscriberService service = new SubscriberServiceImpl();
+        SubscriberService service = new SubscriberServiceImpl();
 
         while (true){
             System.out.println("Выберите действие:");

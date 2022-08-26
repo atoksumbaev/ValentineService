@@ -7,8 +7,6 @@ public class Wish {
     private Subscriber sender;
     private Subscriber receipt;
 
-    public Wish() { }
-
     public Wish(String text, Subscriber sender, Subscriber receipt) {
         this.id = Math.random();
         this.sender = sender;

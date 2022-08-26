@@ -59,8 +59,7 @@ public class WishServiceImpl implements WishService {
             }
         }
 
-        // from db - 0.6395187209445142
-        //           0.6395187209445142
+
 
         if (countWish == 0) {
             throw new WishNotFound("У вас пока нет смс");
